@@ -1,0 +1,39 @@
+from django.db import models
+from ..users.models import Buyer, Seller
+
+
+class Category(models.Model):
+    category_name = models.CharField(max_length=255, primary_key=True)
+    parent_category = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.category_name
+
+
+class ProductListing(models.Model):
+    seller = models.ForeignKey(Seller, on_delete=models.CASCADE, related_name="product_listings")
+    listing_id = models.IntegerField()
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name="product_listings")
+    title = models.CharField(max_length=255)
+    product_name = models.CharField(max_length=255)
+    product_description = models.CharField(max_length=255)
+    price = models.CharField(max_length=255)
+    quantity = models.IntegerField()
+
+    def __str__(self):
+        return f"Product Listing #{self.listing_id}: {self.title}"
+
+
+class Review(models.Model):
+    buyer = models.ForeignKey(Buyer, on_delete=models.CASCADE, related_name="reviews")
+    seller = models.ForeignKey(Seller, on_delete=models.CASCADE, related_name="product_reviews")
+    listing_id = models.IntegerField()
+    review_desc = models.CharField(max_length=255)
+
+
+class Rating(models.Model):
+    buyer = models.ForeignKey(Buyer, on_delete=models.CASCADE, related_name="ratings")
+    seller = models.ForeignKey(Seller, on_delete=models.CASCADE, related_name="product_ratings")
+    date = models.CharField(max_length=255)
+    rating = models.IntegerField()
+    rating_desc = models.CharField(max_length=255)

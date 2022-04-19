@@ -1,0 +1,335 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Nittany Market Home</title>
+
+        <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Open+Sans&display=swap" rel="stylesheet">
+        <link href="{% static 'fontawesome-free-5.15.3-web/css/all.min.css' %}" rel="stylesheet">
+
+        <!-- Bootstrap core CSS -->
+        <link href="{% static 'bootstrap5.0.1/css/bootstrap.min.css' %}" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Open+Sans&display=swap" rel="stylesheet">
+
+    </head>
+    <body style="font-family: 'Fredoka One',serif; background-color: #FDF4DC;">
+
+    <main>
+
+
+    <div class="container py-4">
+        {% include 'messages.html' %}
+
+            <div class="container-fluid py-5">
+                <h1 class="display-5 fw-bold">Your Checking Information </h1>
+                <div class="card bg-dark text-white mb-3">
+                    <div class="card-body">
+                        <form action="{% url 'checking_info' %}" method="post">
+                            {% csrf_token %}
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">Account Type</h6>
+                        </div>
+                        <div class="col-sm-9 text-white-50">
+                            <input type="text" class="form-control" id="fullname" value="{% if user.buyer_infos.exists %}Buyer{% else %}Seller  {% endif %}" disabled>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">Personal Information</h6>
+                        </div>
+                        <div class="col-sm-9 text-white-50">
+                               {% if user.buyer_infos.exists %}
+                            {% with buyer=user.buyer_infos.first %}
+                            <div class="row">
+                                <div class="col">
+                                    <div class="col">
+                                      <h6 class="mb">Email</h6>
+                                    </div>
+                                    <div class="col text-white-50">
+                                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" value="{{ user.email }}" disabled>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="col">
+                                        <h6 class="mb">Full Name</h6>
+                                    </div>
+                                    <div class="col text-white-50">
+                                        <input type="text" class="form-control" name="full_name" id="full_name" value="{{ buyer.first_name }} {{ buyer.last_name }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="col">
+                                        <h6 class="mb">Age</h6>
+                                    </div>
+                                    <div class="col text-white-50">
+                                        <input type="text" class="form-control" name="age" id="age" value="{{ buyer.age }}">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="col">
+                                        <h6 class="">Gender</h6>
+                                    </div>
+                                    <div class="col text-white-50">
+                                        <input type="text" class="form-control" name="gender" id="gender" value="{{ buyer.gender }}">
+                                    </div>
+                                </div>
+                            </div>
+                            {% endwith %}
+                        {% else %}
+                            {% with seller=user.seller_infos.first %}
+                            <div class="row">
+                                    <div class="col">
+                                      <h6 class="mb">Email</h6>
+                                    </div>
+                                    <div class="col text-white-50">
+                                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" value="{{ user.email }}" disabled>
+                                    </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="col">
+                                        <h6 class="mb">Routing Number</h6>
+                                    </div>
+                                    <div class="col text-white-50">
+                                        <input type="text" class="form-control" name="routing_number" id="routing_number" value="{{ seller.routing_number }}">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="col">
+                                        <h6 class="">Account Number</h6>
+                                    </div>
+                                    <div class="col text-white-50">
+                                        <input type="text" class="form-control" name="account_number" id="account_number" value="{{ seller.account_number }}">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="col">
+                                        <h6 class="">Balance</h6>
+                                    </div>
+                                    <div class="col text-white-50">
+                                        <input type="number" class="form-control" name="balance" id="balance" value="{{ seller.balance }}">
+                                    </div>
+                                </div>
+                            </div>
+                            {% endwith %}
+                        {% endif %}
+                        </div>
+                      </div>
+
+                      <hr>
+
+                        {% if user.buyer_infos.exists %}
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Home Address</h6>
+                            </div>
+                            <div class="col-sm-9 text-white-50">
+                                {% with home=user.buyer_infos.first.home_address_id %}
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="col">
+                                            <h6 class="mb">Street Name</h6>
+                                        </div>
+                                        <div class="col text-white-50">
+                                            <input type="text" class="form-control" name="street_name" id="street_name" value="{{ home.street_name }}">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="col">
+                                            <h6 class="">Street Number</h6>
+                                        </div>
+                                        <div class="col text-white-50">
+                                            <input type="text" class="form-control" name="street_num" id="street_num" value="{{ home.street_num }}">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="col">
+                                            <h6 class="">Zipcode</h6>
+                                        </div>
+                                        <div class="col text-white-50">
+                                            <input type="number" class="form-control" name="zipcode" id="zipcode" value="{{ home.zipcode }}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {% endwith %}
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Billing Address</h6>
+                            </div>
+                            <div class="col-sm-9 text-white-50">
+                                {% with billing=user.buyer_infos.first.billing_address_id %}
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="col">
+                                            <h6 class="mb">Street Name</h6>
+                                        </div>
+                                        <div class="col text-white-50">
+                                            <input type="text" class="form-control" name="street_name" id="street_name" value="{{ billing.street_name }}">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="col">
+                                            <h6 class="">Street Number</h6>
+                                        </div>
+                                        <div class="col text-white-50">
+                                            <input type="text" class="form-control" name="street_num" id="street_num" value="{{ billing.street_num }}">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="col">
+                                            <h6 class="">Zipcode</h6>
+                                        </div>
+                                        <div class="col text-white-50">
+                                            <input type="number" class="form-control" name="zipcode" id="zipcode" value="{{ billing.zipcode }}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {% endwith %}
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Credit Card Info</h6>
+                            </div>
+                            <div class="col-sm-9 text-white-50">
+                                {% with card=user.buyer_infos.first.credit_cards.first%}
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <div class="col">
+                                            <h6 class="mb">Card Type</h6>
+                                        </div>
+                                        <div class="col text-white-50">
+                                            <input type="text" class="form-control" name="card_type" id="card_type" value="{{ card.card_type }}">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="col">
+                                            <h6 class="">Card Number</h6>
+                                        </div>
+                                        <div class="col text-white-50">
+                                            <input type="text" class="form-control" name="card_num" id="card_num" value="{{ card.get_card_num }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="col">
+                                            <h6 class="mb">Card Code</h6>
+                                        </div>
+                                        <div class="col text-white-50">
+                                            <input type="text" class="form-control" name="card_code" id="card_code" value="{{ card.card_code }}">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="col">
+                                            <h6 class="">Expire Month</h6>
+                                        </div>
+                                        <div class="col text-white-50">
+                                            <input type="text" class="form-control" name="expire_month" id="expire_month" value="{{ card.expire_month }}">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="col">
+                                            <h6 class="">Expire Year</h6>
+                                        </div>
+                                        <div class="col text-white-50">
+                                            <input type="number" class="form-control" name="expire_year" id="expire_year" value="{{ card.expire_year }}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {% endwith %}
+                            </div>
+                        </div>
+                        <hr>
+
+                        {% endif %}
+                      <div class="row">
+                        <div class="col-sm-12">
+
+                        <button type="submit" class="btn btn-primary btn-lg mt-3" >Update</button>
+                        <a class="btn btn-secondary btn-lg mt-3" href="{% url 'home' %}">Back To Home</a>
+
+                            <button type="button" class="btn btn-warning btn-lg mt-3" data-bs-toggle="modal" data-bs-target="#passModal">
+                                Change Password
+                            </button>
+                        </div>
+                      </div>
+                            <hr>
+
+                        </form>
+
+                    </div>
+                  </div>
+            </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="passModal" tabindex="-1" aria-labelledby="passModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="passModalLabel">Change Password</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="{% url 'change_password' %}" method="post">
+                    {% csrf_token %}
+                        <div class="modal-body">
+                            <div class="row">
+
+                            <div class="col text-dark">
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <h6 class="mb">Enter Current Password</h6>
+                                    </div>
+                                    <div class="col text-white-50">
+                                        <input type="password" class="form-control" name="current_password" id="current_password">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <h6 class="">Enter New Password</h6>
+                                    </div>
+                                    <div class="col text-white-50">
+                                        <input type="password" class="form-control" name="new_password" id="new_password">
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-warning">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <footer class="mastfoot mt-auto">
+        <div class="d-flex justify-content-center text-dark">
+        <h5>Made with <i class="fas fa-heart" style="color: #e25555;"></i> & <i class="fas fa-mug-hot" style="color: brown;"></i> by <a href="https://github.com/sleepytaco" target="_blank" style="text-decoration: none;"><span style="border-bottom: 3px #d56b6b dashed;">Mohammed Khan</span></a> </h5>
+        </div>
+        </footer>
+
+        </div>
+    </main>
+
+    <script src="{% static 'bootstrap5.0.1/js/bootstrap.bundle.min.js' %}" type="application/javascript"></script>
+
+    </body>
+</html>

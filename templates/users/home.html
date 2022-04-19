@@ -1,0 +1,48 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Nittany Market Home</title>
+
+        <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Open+Sans&display=swap" rel="stylesheet">
+        <link href="{% static 'fontawesome-free-5.15.3-web/css/all.min.css' %}" rel="stylesheet">
+
+        <!-- Bootstrap core CSS -->
+        <link href="{% static 'bootstrap5.0.1/css/bootstrap.min.css' %}" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Open+Sans&display=swap" rel="stylesheet">
+
+    </head>
+    <body style="font-family: 'Fredoka One',serif; background-color: #FDF4DC;">
+
+    <main>
+
+
+    <div class="container py-4">
+        {% include 'messages.html' %}
+
+        <div class="p-5 mb-4 bg-light rounded-3">
+            <div class="container-fluid py-5">
+                <h1 class="display-5 fw-bold">Nittany Market Portal</h1>
+                <p class="col-md-8 fs-4">Welcome, {{ user.email }}!</p>
+
+                <a class="btn btn-danger btn-lg mt-3" href="{% url 'sign_out' %}">Logout</a>
+                <a class="btn btn-primary btn-lg mt-3" href="{% url 'checking_info' %}">Checking Info</a>
+
+            </div>
+        </div>
+
+        <footer class="mastfoot mt-auto">
+        <div class="d-flex justify-content-center text-dark">
+        <h5>Made with <i class="fas fa-heart" style="color: #e25555;"></i> & <i class="fas fa-mug-hot" style="color: brown;"></i> by <a href="https://github.com/sleepytaco" target="_blank" style="text-decoration: none;"><span style="border-bottom: 3px #d56b6b dashed;">Mohammed Khan</span></a> </h5>
+        </div>
+        </footer>
+
+        </div>
+    </main>
+
+    <script src="{% static 'bootstrap5.0.1/js/bootstrap.bundle.min.js' %}" type="application/javascript"></script>
+
+    </body>
+</html>

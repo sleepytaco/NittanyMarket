@@ -1,0 +1,81 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Welcome to Nittany Market!</title>
+
+        <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Open+Sans&display=swap" rel="stylesheet">
+        <link href="{% static 'fontawesome-free-5.15.3-web/css/all.min.css' %}" rel="stylesheet">
+
+        <!-- Bootstrap core CSS -->
+        <link href="{% static 'bootstrap5.0.1/css/bootstrap.min.css' %}" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Open+Sans&display=swap" rel="stylesheet">
+
+    </head>
+    <body style="font-family: 'Fredoka One',serif; background-color: #FDF4DC;">
+
+    <main>
+
+
+    <div class="container py-4">
+        {% include 'messages.html' %}
+
+        <div class="p-5 mb-4 bg-light rounded-3">
+            <div class="container-fluid py-5">
+                <h1 class="display-5 fw-bold">Nittany Market</h1>
+                <p class="col-md-8 fs-4">Welcome! Nittany Market is a new platform under planning which aims to provide members of Nittany State
+University  (NSU)  to  sell  and  buy  used  or  unused  goods  online.</p>
+
+                {% if not user.is_authenticated %}
+                <div class="card bg-dark text-white mb-3 col-5">
+                    <div class="card-body">
+                        <form action="{% url 'sign_in' %}" method="post">
+                            {% csrf_token %}
+
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Email</h6>
+                                </div>
+                                <div class="col-sm-9 text-white-50">
+                                    <input type="text" class="form-control" name="email" id="email" aria-describedby="emailHelp">
+                                </div>
+                            </div>
+
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Password</h6>
+                                </div>
+                                    <div class="col-sm-9 text-white-50">
+                                    <input type="password" class="form-control" name="password" id="password">
+                                </div>
+                            </div>
+
+                                <button type="submit" class="btn btn-success btn-lg mt-3">Login!</button>
+{#                                <a class="btn btn-primary btn-lg mt-3" href="#more">Sign Up!</a>#}
+                        </form>
+                    </div>
+                </div>
+                {% else %}
+                <a class="btn btn-success btn-lg mt-3" href="{% url 'home' %}">Go Back To The Portal</a>
+                {% endif %}
+
+
+            </div>
+        </div>
+
+        <footer class="mastfoot mt-auto">
+        <div class="d-flex justify-content-center text-dark">
+        <h5>Made with <i class="fas fa-heart" style="color: #e25555;"></i> & <i class="fas fa-mug-hot" style="color: brown;"></i> by <a href="https://github.com/sleepytaco" target="_blank" style="text-decoration: none;"><span style="border-bottom: 3px #d56b6b dashed;">Mohammed Khan</span></a> </h5>
+        </div>
+        </footer>
+
+        </div>
+    </main>
+
+    <script src="{% static 'bootstrap5.0.1/js/bootstrap.bundle.min.js' %}" type="application/javascript"></script>
+
+    </body>
+</html>
