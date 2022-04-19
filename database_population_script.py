@@ -1,4 +1,5 @@
-import os, django
+import django
+import os
 
 from django.contrib.auth.hashers import make_password
 
