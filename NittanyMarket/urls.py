@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('apps.users.urls')),
+    path('', include('apps.products.urls')),
 ]
 
 admin.site.site_header = 'Nittany Market Admin'                    # default: "Django Administration"

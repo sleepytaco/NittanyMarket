@@ -9,6 +9,24 @@ class Category(models.Model):
     def __str__(self):
         return self.category_name
 
+    def get_parents(self):
+        """
+        Returns a list of parent categories for a given category
+        """
+        stack = [self]
+        tree = [self.category_name]
+        while len(stack) != 0:
+            current = stack.pop()
+            if not current.parent_category == "Root":
+                tree = [current.parent_category] + tree
+                stack.append(Category.objects.get(category_name=current.parent_category))
+        return tree
+
+    def get_children(self):
+        """
+        Returns a list of parent categories for a given category
+        """
+        return Category.objects.filter(parent_category=self.category_name)
 
 class ProductListing(models.Model):
     seller = models.ForeignKey(Seller, on_delete=models.CASCADE, related_name="product_listings")
