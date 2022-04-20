@@ -18,8 +18,10 @@
 
     <main>
 
+            {% include 'navbar.html' %}
 
-    <div class="container py-4">
+    <div class="container">
+
         {% include 'messages.html' %}
 
             <div class="container-fluid py-5">
@@ -85,8 +87,8 @@
                         {% else %}
                             {% with seller=user.seller_infos.first %}
                             <div class="row">
-                                    <div class="col">
-                                      <h6 class="mb">Email</h6>
+                                    <div class="col-1">
+                                      <h6 class="mt-2">Email</h6>
                                     </div>
                                     <div class="col text-white-50">
                                         <input type="email" class="form-control" id="email" aria-describedby="emailHelp" value="{{ user.email }}" disabled>
@@ -115,7 +117,7 @@
                                         <h6 class="">Balance</h6>
                                     </div>
                                     <div class="col text-white-50">
-                                        <input type="number" class="form-control" name="balance" id="balance" value="{{ seller.balance }}">
+                                        <input type="number" class="form-control" name="balance" id="balance" value="{{ seller.balance }}" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -319,12 +321,6 @@
                 </div>
             </div>
         </div>
-
-        <footer class="mastfoot mt-auto">
-        <div class="d-flex justify-content-center text-dark">
-        <h5>Made with <i class="fas fa-heart" style="color: #e25555;"></i> & <i class="fas fa-mug-hot" style="color: brown;"></i> by <a href="https://github.com/sleepytaco" target="_blank" style="text-decoration: none;"><span style="border-bottom: 3px #d56b6b dashed;">Mohammed Khan</span></a> </h5>
-        </div>
-        </footer>
 
         </div>
     </main>

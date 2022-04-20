@@ -23,7 +23,7 @@
         {% include 'messages.html' %}
 
     <div class="container-fluid px-5 py-4">
-        <h1 class="display-5 fw-bold">Browsing Products in {{ category }}</h1>
+        <h1 class="display-5 fw-bold">Product Listings For {{ category }}</h1>
 
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb h3">
@@ -38,24 +38,41 @@
         </nav>
 
         <div class="row h4">
-            <div class="col-3">
+            <div class="col-3 g-4">
+                {% if category.get_children %}
                   <ul style="list-style-type: none">
                     {% for cat in category.get_children %}
                     <li><a href="{% url 'category' cat %}">{{ cat }}</a></li>
                     {% endfor %}
                   </ul>
+                {% endif %}
             </div>
             <div class="col">
+                {% if category.product_listings.all %}
+                    <div class="row row-cols-1 row-cols-md-3 g-4 text-dark mt-0">
+                    {% for prod in category.product_listings.all %}
+                            <div class="col">
+                                <div class="card overflow-auto" style="background-color: {{ bg_color|default:"#357779" }};">
+                                    <img  class="bd-placeholder-img card-img-top" src="" style="max-width:100%; height: 200px;   object-fit: cover;" alt="{{ prod.title }} thumbnail">
 
+                                    <div class="card-body">
+                                        <h5 class="card-title"><a href="" class="stretched-link" style="text-decoration: none; color: white">{{ prod.title  }}</a></h5>
+                                        <p class="card-text">
+                                            <span class="badge bg-success text-white">{{ prod.price }}</span>
+                                            <span class="badge bg-warning text-dark">Qty: {{ prod.quantity }}</span>
+                                        </p>
+                                        <p class="card-text"><small class="text-white-50">{{ prod.product_name }} sold by {{ prod.seller }}</small></p>
+                                    </div>
+                                </div>
+                            </div>
+                    {% endfor %}
+                    </div>
+                {% else %}
+                    <h4>No product listings found for this {{ category }}</h4>
+                {% endif %}
             </div>
         </div>
     </div>
-
-    <footer class="mastfoot mt-auto">
-    <div class="d-flex justify-content-center text-dark">
-    <h5>Made with <i class="fas fa-heart" style="color: #e25555;"></i> & <i class="fas fa-mug-hot" style="color: brown;"></i> by <a href="https://github.com/sleepytaco" target="_blank" style="text-decoration: none;"><span style="border-bottom: 3px #d56b6b dashed;">Mohammed Khan</span></a> </h5>
-    </div>
-    </footer>
 
     </main>
 

@@ -20,13 +20,14 @@ class Category(models.Model):
             if not current.parent_category == "Root":
                 tree = [current.parent_category] + tree
                 stack.append(Category.objects.get(category_name=current.parent_category))
-        return tree
+        return tree if len(tree) > 1 else []
 
     def get_children(self):
         """
         Returns a list of parent categories for a given category
         """
         return Category.objects.filter(parent_category=self.category_name)
+
 
 class ProductListing(models.Model):
     seller = models.ForeignKey(Seller, on_delete=models.CASCADE, related_name="product_listings")

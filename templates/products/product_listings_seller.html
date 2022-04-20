@@ -1,0 +1,77 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Nittany Market Home</title>
+
+        <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Open+Sans&display=swap" rel="stylesheet">
+        <link href="{% static 'fontawesome-free-5.15.3-web/css/all.min.css' %}" rel="stylesheet">
+
+        <!-- Bootstrap core CSS -->
+        <link href="{% static 'bootstrap5.0.1/css/bootstrap.min.css' %}" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Open+Sans&display=swap" rel="stylesheet">
+
+    </head>
+    <body style="font-family: 'Fredoka One',serif; background-color: #FDF4DC;">
+
+    <main>
+        {% include 'navbar.html' %}
+
+
+        {% include 'messages.html' %}
+
+    <div class="container-fluid px-5 py-4">
+        <h1 class="display-5 fw-bold">Your Product Listings</h1>
+
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb h3">
+            {% for cat in category.get_parents %}
+                {% if not forloop.last %}
+                <li class="breadcrumb-item"><a href="{% url 'category' cat %}">{{ cat }}</a></li>
+                {% else %}
+                <li class="breadcrumb-item active" aria-current="page">{{ cat }}</li>
+                {% endif %}
+            {% endfor %}
+          </ol>
+        </nav>
+
+        <div class="row h4">
+            <div class="col">
+                {% with listings=user.seller_infos.first.product_listings.all %}
+                {% if listings %}
+                    <div class="row row-cols-1 row-cols-md-4 g-4 text-dark mt-0">
+                    {% for prod in listings %}
+                            <div class="col">
+                                <div class="card overflow-auto" style="background-color: {{ bg_color|default:"#357779" }};">
+                                    <img  class="bd-placeholder-img card-img-top" src="" style="max-width:100%; height: 200px;   object-fit: cover;" alt="{{ prod.title }} thumbnail">
+
+                                    <div class="card-body">
+                                        <h5 class="card-title"><a href="" class="stretched-link" style="text-decoration: none; color: white">
+                                            {{ prod.title  }}</a><span class="badge bg-dark text-white ml-3">{{ prod.product_name }}</span></h5>
+                                        <p class="card-text">
+                                            <span class="badge bg-success text-white">{{ prod.price }}</span>
+                                            <span class="badge bg-warning text-dark">Qty: {{ prod.quantity }}</span>
+
+                                        </p>
+{#                                        <p class="card-text"><small class="text-white-50">Sold by {{ prod.seller }}</small></p>#}
+                                    </div>
+                                </div>
+                            </div>
+                    {% endfor %}
+                    </div>
+                {% else %}
+                    <h4>No product listings created yet.</h4>
+                {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+    </div>
+
+    </main>
+
+    <script src="{% static 'bootstrap5.0.1/js/bootstrap.bundle.min.js' %}" type="application/javascript"></script>
+
+    </body>
+</html>
