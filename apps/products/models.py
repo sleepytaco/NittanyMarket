@@ -20,7 +20,7 @@ class Category(models.Model):
             if not current.parent_category == "Root":
                 tree = [current.parent_category] + tree
                 stack.append(Category.objects.get(category_name=current.parent_category))
-        return tree if len(tree) > 1 else []
+        return tree
 
     def get_children(self):
         """
@@ -46,7 +46,7 @@ class ProductListing(models.Model):
 class Review(models.Model):
     buyer = models.ForeignKey(Buyer, on_delete=models.CASCADE, related_name="reviews")
     seller = models.ForeignKey(Seller, on_delete=models.CASCADE, related_name="product_reviews")
-    listing_id = models.IntegerField()
+    listing = models.ForeignKey(ProductListing, on_delete=models.SET_NULL, null=True, related_name="reviews")
     review_desc = models.CharField(max_length=255)
 
 

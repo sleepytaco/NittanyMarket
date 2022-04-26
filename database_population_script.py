@@ -189,7 +189,8 @@ with open(r'dataset\Reviews.csv', newline='') as f:
         for review in reviews:
             buyer = User.objects.get(username=review[0]).buyer_infos.first()
             seller = User.objects.get(username=review[1]).seller_infos.first()
-            r = Review(buyer=buyer, seller=seller, listing_id=review[2], review_desc=review[3])
+            listing = ProductListing.objects.get(listing_id=review[2])
+            r = Review(buyer=buyer, seller=seller, listing=listing, review_desc=review[3])
             r.save()
         print(" Successfully populated Review table!")
 

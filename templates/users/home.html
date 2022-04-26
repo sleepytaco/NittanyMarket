@@ -28,8 +28,8 @@
                 <h1 class="display-5 fw-bold">Nittany Market Portal</h1>
                 <p class="col-md-8 fs-4">Welcome, {{ user.email }}!</p>
 
-                <a class="btn btn-danger btn-lg mt-3" href="{% url 'sign_out' %}">Logout</a>
-                <a class="btn btn-primary btn-lg mt-3" href="{% url 'checking_info' %}">Checking Info</a>
+                <a class="btn btn-success btn-lg mt-3" href="{% url 'category' 'all' %}">Explore Product Listings</a>
+                <a class="btn btn-primary btn-lg mt-3" href="{% url 'checking_info' %}">View Your Checking Info</a>
 
             </div>
         </div>

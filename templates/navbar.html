@@ -20,7 +20,7 @@
                             <li><a class="dropdown-item" href="{% url 'category' cat.category_name %}">{{ cat.category_name }}</a></li>
                         {% endfor %}
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="">View all</a></li>
+                        <li><a class="dropdown-item" href="{% url 'category' 'All' %}">View all</a></li>
                     </ul>
                 </li>
                 {% else %}
@@ -29,19 +29,18 @@
                 </li>
                 {% endif %}
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'checking_info' %}">Checking Info</a>
-                </li>
+{#                <li class="nav-item">#}
+{#                    <a class="nav-link" href="{% url 'checking_info' %}">Checking Info</a>#}
+{#                </li>#}
             </ul>
 
 
             <div class="navbar-nav justify-content-end">
-                <!--
-                <input class="form-control border border-secondary bg-dark text-white-50 me-lg-2 bg-dark mb-1" id="unTubeSearchBar" type="text" placeholder="Search UnTube">
-                -->
-                <a class="nav-link btn-lg me-1 mt-2" href="#">
-                    <i class="fas fa-search"></i>
-                </a>
+
+                <form class="d-flex h-75 mt-2 me-1">
+                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="quickViewDropdown" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">

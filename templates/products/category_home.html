@@ -1,0 +1,54 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Nittany Market Home</title>
+
+        <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Open+Sans&display=swap" rel="stylesheet">
+        <link href="{% static 'fontawesome-free-5.15.3-web/css/all.min.css' %}" rel="stylesheet">
+
+        <!-- Bootstrap core CSS -->
+        <link href="{% static 'bootstrap5.0.1/css/bootstrap.min.css' %}" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Open+Sans&display=swap" rel="stylesheet">
+
+    </head>
+    <body style="font-family: 'Fredoka One',serif; background-color: #FDF4DC;">
+
+    <main>
+        {% include 'navbar.html' %}
+
+
+        {% include 'messages.html' %}
+
+    <div class="container-fluid px-5 py-4">
+         <span class=" d-flex justify-content-center">
+            <h1 class="display-5 fw-bold">All Categories <span class="badge rounded-pill bg-secondary">{{ root_categories.count }}</span></h1>
+        </span>
+        <br>
+        <div class="row row-cols-1 row-cols-md-4 g-4"><!--data-masonry='{"percentPosition": true }'-->
+            {% for cat in root_categories %}
+            <div class="col mb-4">
+                <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg" style="">
+                    <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                        <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
+                            <a href="{% url 'category' cat.category_name %}" class="stretched-link" style="text-decoration: none; color: #fafafa">
+                                {{ cat.category_name }}</a>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+
+
+    </main>
+
+    <script src="{% static 'bootstrap5.0.1/js/bootstrap.bundle.min.js' %}" type="application/javascript"></script>
+
+    </body>
+</html>

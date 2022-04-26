@@ -1,0 +1,115 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Nittany Market Home</title>
+
+        <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Open+Sans&display=swap" rel="stylesheet">
+        <link href="{% static 'fontawesome-free-5.15.3-web/css/all.min.css' %}" rel="stylesheet">
+
+        <!-- Bootstrap core CSS -->
+        <link href="{% static 'bootstrap5.0.1/css/bootstrap.min.css' %}" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Open+Sans&display=swap" rel="stylesheet">
+
+    </head>
+    <body style="font-family: 'Fredoka One',serif; background-color: #FDF4DC;">
+
+    <main>
+        {% include 'navbar.html' %}
+
+
+        {% include 'messages.html' %}
+
+        <div class="container-fluid px-5 py-4">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb h3">
+               <li class="breadcrumb-item"><a href="{% url 'category' 'all' %}">All</a></li>
+                {% for cat in listing.category.get_parents %}
+                    <li class="breadcrumb-item"><a href="{% url 'category' cat %}">{{ cat }}</a></li>
+                {% endfor %}
+                 <li class="breadcrumb-item text-muted">{{ listing.title|title }}</li>
+
+              </ol>
+            </nav>
+
+            <div class="row">
+                <div class="col">
+                    <div class="row h4">
+                <div class="col">
+                    <div class="card text-white" style="max-width: 100%; background-color: #1A4464;">
+                        <div class="row g-0">
+                            <div class="col">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <h2 class="card-title text-white">
+                                            <a href="" target="_blank" style="color: white; text-decoration: none">{{ listing.product_name|title  }}</a>
+                                            <br><small class="h4">Sold by <span style="border-bottom: 3px #e35959 dashed;">{{ listing.seller }}</span></small>
+                                        </h2>
+                                        <h4>
+                                            <span>
+                                                <span class="badge bg-primary text-white">
+                                                    {{ listing.price }}
+                                                </span>
+                                                {% if listing.quantity != 0 %}
+                                                <span class="badge bg-warning text-white me-1" >
+                                                    <i class="fas fa-fire me-1"></i>
+                                                    {{ listing.quantity }} left
+                                                </span>
+                                                <span class="badge bg-success text-white" >
+                                                    <i class="fas fa-shopping-cart me-1"></i>
+                                                    Add To Cart
+                                                </span>
+                                                {% else %}
+                                                <span class="badge bg-danger text-white" >
+                                                    <i class="fas fa-shopping-cart me-1"></i>
+                                                    Sold Out
+                                                </span>
+                                                {% endif %}
+                                            </span>
+                                        </h4>
+                                    </div>
+                                    <br>
+                                    <p class="overflow-auto h5">
+                                    {% if listing.product_description %}
+                                    Description: {{ listing.product_description  }}
+                                    {% else %}
+                                    No description
+                                    {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </div>
+                <div class="col">
+                       <span class="bg-light d-flex justify-content-center mb-2">
+                <h2>{% if not listing.reviews.all %}No{% endif %} Reviews</h2>
+            </span>
+            <div class="row row-cols-1 row-cols-md-4 g-5 ms-1">
+                {% for review in listing.reviews.all %}
+                <div class="col w-25" >
+                    <h2>"{{ review.review_desc }}"</h2>
+                    <img src="https://robohash.org/{{ review.buyer }}.png?set=set3" alt="{{ review.buyer.buyer_email.first_name }}" class="border border-3 border-primary rounded-circle" width="42" height="42">
+
+                    <span> {{ review.buyer }}</span><br>
+                </div>
+                {% endfor %}
+            </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </main>
+
+    <script src="{% static 'bootstrap5.0.1/js/bootstrap.bundle.min.js' %}" type="application/javascript"></script>
+
+    </body>
+</html>
+
+

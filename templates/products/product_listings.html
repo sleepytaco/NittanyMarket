@@ -23,10 +23,15 @@
         {% include 'messages.html' %}
 
     <div class="container-fluid px-5 py-4">
-        <h1 class="display-5 fw-bold">Product Listings For {{ category }}</h1>
+        <span class=" d-flex justify-content-center">
+            <h1 class="display-5 fw-bold">Product Listings For {{ category }} <span class="badge rounded-pill bg-secondary  ">{{ product_listings.count }}</span> </h1>
+
+        </span>
+        <span class=" d-flex justify-content-center">
 
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb h3">
+             <li class="breadcrumb-item"><a href="{% url 'category' 'all' %}">All</a></li>
             {% for cat in category.get_parents %}
                 {% if not forloop.last %}
                 <li class="breadcrumb-item"><a href="{% url 'category' cat %}">{{ cat }}</a></li>
@@ -36,39 +41,45 @@
             {% endfor %}
           </ol>
         </nav>
+        </span>
 
         <div class="row h4">
+            {% if product_listings and category.get_children %}
             <div class="col-3 g-4">
-                {% if category.get_children %}
                   <ul style="list-style-type: none">
                     {% for cat in category.get_children %}
                     <li><a href="{% url 'category' cat %}">{{ cat }}</a></li>
                     {% endfor %}
                   </ul>
-                {% endif %}
             </div>
+            {% endif %}
+
             <div class="col">
-                {% if category.product_listings.all %}
-                    <div class="row row-cols-1 row-cols-md-3 g-4 text-dark mt-0">
-                    {% for prod in category.product_listings.all %}
+                {% if product_listings %}
+                    <div class="row row-cols-1 row-cols-md-{% if category.get_children %}3{% else %}4{% endif %} g-4 text-dark mt-0">
+                    {% for prod in product_listings %}
                             <div class="col">
                                 <div class="card overflow-auto" style="background-color: {{ bg_color|default:"#357779" }};">
-                                    <img  class="bd-placeholder-img card-img-top" src="" style="max-width:100%; height: 200px;   object-fit: cover;" alt="{{ prod.title }} thumbnail">
 
                                     <div class="card-body">
-                                        <h5 class="card-title"><a href="" class="stretched-link" style="text-decoration: none; color: white">{{ prod.title  }}</a></h5>
+                                        <h5 class="card-title"><a href="{% url 'product_listing' prod.listing_id %}" class="stretched-link" style="text-decoration: none; color: white">{{ prod.product_name|title  }}</a></h5>
                                         <p class="card-text">
                                             <span class="badge bg-success text-white">{{ prod.price }}</span>
-                                            <span class="badge bg-warning text-dark">Qty: {{ prod.quantity }}</span>
+                                            <span class="badge bg-light text-dark">Qty: {{ prod.quantity }}</span>
+                                            {% if prod.reviews.count > 0 %}
+                                            <span class="badge bg-warning text-dark">{{ prod.reviews.count }} reviews</span>
+                                            {% endif %}
                                         </p>
-                                        <p class="card-text"><small class="text-white-50">{{ prod.product_name }} sold by {{ prod.seller }}</small></p>
+                                        <p class="card-text"><small class="text-white-50">{{ prod.title|title }} sold by {{ prod.seller }}</small></p>
                                     </div>
                                 </div>
                             </div>
                     {% endfor %}
                     </div>
                 {% else %}
-                    <h4>No product listings found for this {{ category }}</h4>
+                    <span class=" d-flex justify-content-center">
+                        <h4>No product listings found for this {{ category }}</h4>
+                    </span>
                 {% endif %}
             </div>
         </div>
