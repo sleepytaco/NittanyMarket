@@ -47,28 +47,7 @@
                                             <a href="" target="_blank" style="color: white; text-decoration: none">{{ listing.product_name|title  }}</a>
                                             <br><small class="h4">Sold by <span style="border-bottom: 3px #e35959 dashed;">{{ listing.seller }}</span></small>
                                         </h2>
-                                        <h4>
-                                            <span>
-                                                <span class="badge bg-primary text-white">
-                                                    {{ listing.price }}
-                                                </span>
-                                                {% if listing.quantity != 0 %}
-                                                <span class="badge bg-warning text-white me-1" >
-                                                    <i class="fas fa-fire me-1"></i>
-                                                    {{ listing.quantity }} left
-                                                </span>
-                                                <span class="badge bg-success text-white" >
-                                                    <i class="fas fa-shopping-cart me-1"></i>
-                                                    Add To Cart
-                                                </span>
-                                                {% else %}
-                                                <span class="badge bg-danger text-white" >
-                                                    <i class="fas fa-shopping-cart me-1"></i>
-                                                    Sold Out
-                                                </span>
-                                                {% endif %}
-                                            </span>
-                                        </h4>
+
                                     </div>
                                     <br>
                                     <p class="overflow-auto h5">
@@ -78,6 +57,47 @@
                                     No description
                                     {% endif %}
                                     </p>
+                                    <br>
+                                    <h4>
+                                        <span>
+                                            <span class="badge bg-primary text-white">
+                                                {{ listing.price }}
+                                            </span>
+                                            {% if listing.quantity != 0 %}
+                                            <span class="badge bg-warning text-white me-1" >
+                                                <i class="fas fa-fire me-1"></i>
+                                                {{ listing.quantity }} left
+                                            </span>
+                                                {% if user == listing.seller %}
+                                            <span class="badge bg-success text-white" >
+                                                <i class="fas fa-shopping-cart me-1"></i>
+                                                Add To Cart
+                                            </span>
+                                                {% else %}
+                                                    {% if listing.active_period %}
+                                                    <span class="badge bg-info text-white me-1 mt-2" >
+                                                        <i class="fas fa-calendar me-1"></i>
+                                                        Removed On {{ listing.active_period }}
+                                                    </span>
+                                                    {% else %}
+                                                <a href="{% url 'remove_product_listing' listing.listing_id %}" class="badge bg-danger text-white" >
+                                                <i class="fas fa-trash me-1"></i>
+                                                Remove Listing
+                                                </a>
+                                                        {% endif %}
+                                                {% endif %}
+                                            {% else %}
+                                            <span class="badge bg-success text-white" >
+                                                <i class="fas fa-shopping-cart me-1"></i>
+                                                Sold Out
+                                            </span>
+                                            <a href="{% url 'remove_product_listing' listing.listing_id %}" class="badge bg-danger text-white" >
+                                                <i class="fas fa-trash me-1"></i>
+                                                Remove Listing
+                                            </a>
+                                            {% endif %}
+                                        </span>
+                                    </h4>
                                 </div>
                             </div>
                         </div>
@@ -89,13 +109,13 @@
                        <span class="bg-light d-flex justify-content-center mb-2">
                 <h2>{% if not listing.reviews.all %}No{% endif %} Reviews</h2>
             </span>
-            <div class="row row-cols-1 row-cols-md-4 g-5 ms-1">
+            <div class="row row-cols-1 row-cols-md-2 g-5 ms-1">
                 {% for review in listing.reviews.all %}
-                <div class="col w-25" >
+                <div class="col" >
                     <h2>"{{ review.review_desc }}"</h2>
-                    <img src="https://robohash.org/{{ review.buyer }}.png?set=set3" alt="{{ review.buyer.buyer_email.first_name }}" class="border border-3 border-primary rounded-circle" width="42" height="42">
+                    <img src="https://robohash.org/{{ review.buyer }}.png?set=set3" alt="{{ review.buyer.buyer_email.first_name }}" class="border border-3 border-info rounded-circle" width="42" height="42">
 
-                    <span> {{ review.buyer }}</span><br>
+                    <span class="ms-2"> {{ review.buyer }}</span><br>
                 </div>
                 {% endfor %}
             </div>

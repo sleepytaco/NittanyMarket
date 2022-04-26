@@ -38,6 +38,7 @@ class ProductListing(models.Model):
     product_description = models.CharField(max_length=255)
     price = models.CharField(max_length=255)
     quantity = models.IntegerField()
+    active_period = models.DateField(null=True)
 
     def __str__(self):
         return f"Product Listing #{self.listing_id}: {self.title}"

@@ -61,6 +61,9 @@ class Buyer(models.Model):
     def __str__(self):
         return str(self.buyer_email)
 
+    def get_full_name(self):
+        return str(self.buyer_email.get_full_name())
+
 
 class Seller(models.Model):
     seller_email = models.ForeignKey(User, on_delete=models.CASCADE, primary_key=True, related_name="seller_infos")

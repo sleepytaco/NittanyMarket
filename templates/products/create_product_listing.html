@@ -1,0 +1,166 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Nittany Market Home</title>
+
+        <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Open+Sans&display=swap" rel="stylesheet">
+        <link href="{% static 'fontawesome-free-5.15.3-web/css/all.min.css' %}" rel="stylesheet">
+
+        <!-- Bootstrap core CSS -->
+        <link href="{% static 'bootstrap5.0.1/css/bootstrap.min.css' %}" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Open+Sans&display=swap" rel="stylesheet">
+
+    </head>
+    <body style="font-family: 'Fredoka One',serif; background-color: #FDF4DC;">
+
+    <main>
+
+            {% include 'navbar.html' %}
+
+    <div class="container">
+
+        {% include 'messages.html' %}
+
+            <div class="container-fluid py-5">
+                <h1 class="display-5 fw-bold">Publish New Product Listing</h1>
+                <div class="card bg-dark text-white mb-3">
+                    <div class="card-body">
+                        <form action="{% url 'create_product_listing' %}" method="post">
+                            {% csrf_token %}
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Product Listing Info</h6>
+                            </div>
+                            <div class="col-sm-9 text-white-50">
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <div class="col">
+                                            <h6 class="mb">Title</h6>
+                                        </div>
+                                        <div class="col text-white-50">
+                                            <input type="text" class="form-control" name="title" id="title" value="{{ listing.title }}">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="col">
+                                            <h6 class="">Product Name</h6>
+                                        </div>
+                                        <div class="col text-white-50">
+                                            <input type="text" class="form-control" name="product_name" id="product_name" value="{{ listing.product_name }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <div class="col">
+                                            <h6 class="mb">Product Description</h6>
+                                        </div>
+                                        <div class="col text-white-50">
+                                            <textarea type="text" class="form-control" name="product_description" id="product_description">{{ listing.product_description }}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="col">
+                                            <h6 class="">Price</h6>
+                                        </div>
+                                        <div class="col text-white-50">
+                                            <input type="text" class="form-control" name="price" id="price" value="{{ listing.price }}">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="col">
+                                            <h6 class="">Quantity</h6>
+                                        </div>
+                                        <div class="col text-white-50">
+                                            <input type="number" class="form-control" name="quantity" id="quantity" value="{{ listing.quantity }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <div class="col">
+                                            <h6 class="">Category</h6>
+                                        </div>
+                                        <div class="col text-white-50">
+                                            <select class="form-select" name="category" id="category">
+                                              <option selected>Select A Category</option>
+                                                {% for cat in categories %}
+                                                    <option value="{{ cat.category_name }}">{{ cat.category_name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+
+                      <div class="row">
+                        <div class="col-sm-12">
+
+                        <button type="submit" class="btn btn-primary btn-lg mt-3" >Publish</button>
+                        <a class="btn btn-secondary btn-lg mt-3" href="{% url 'home' %}">Back To Home</a>
+
+                        </div>
+                      </div>
+                            <hr>
+
+                        </form>
+
+                    </div>
+                  </div>
+            </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="passModal" tabindex="-1" aria-labelledby="passModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="passModalLabel">Change Password</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="{% url 'change_password' %}" method="post">
+                    {% csrf_token %}
+                        <div class="modal-body">
+                            <div class="row">
+
+                            <div class="col text-dark">
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <h6 class="mb">Enter Current Password</h6>
+                                    </div>
+                                    <div class="col text-white-50">
+                                        <input type="password" class="form-control" name="current_password" id="current_password">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <h6 class="">Enter New Password</h6>
+                                    </div>
+                                    <div class="col text-white-50">
+                                        <input type="password" class="form-control" name="new_password" id="new_password">
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-warning">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        </div>
+    </main>
+
+    <script src="{% static 'bootstrap5.0.1/js/bootstrap.bundle.min.js' %}" type="application/javascript"></script>
+
+    </body>
+</html>

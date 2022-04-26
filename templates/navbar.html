@@ -24,8 +24,20 @@
                     </ul>
                 </li>
                 {% else %}
+                    <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="quickViewDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Categories
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="quickViewDropdown" style="z-index: 1021;">
+                        {% for cat in root_categories %}
+                            <li><a class="dropdown-item" href="{% url 'category' cat.category_name %}">{{ cat.category_name }}</a></li>
+                        {% endfor %}
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'category' 'All' %}">View all</a></li>
+                    </ul>
+                </li>
                        <li class="nav-item">
-                    <a class="nav-link" href="{% url 'product_listings' %}">Product Listings</a>
+                    <a class="nav-link" href="{% url 'product_listings' %}">Your Product Listings</a>
                 </li>
                 {% endif %}
 
@@ -37,9 +49,10 @@
 
             <div class="navbar-nav justify-content-end">
 
-                <form class="d-flex h-75 mt-2 me-1">
-                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-success" type="submit">Search</button>
+                <form action="{% url 'search' %}" method="post" class="d-flex h-75 mt-2 me-1">
+                    {% csrf_token %}
+                      <input class="form-control me-2" name="query" type="search" placeholder="Search" aria-label="Search">
+                      <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
 
                 <li class="nav-item dropdown">
