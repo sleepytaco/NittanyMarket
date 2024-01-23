@@ -1,8 +1,7 @@
-# Nittany Market Phase 2 Progress Review
+# Nittany Market
 
-This project is part of the Phase 2  progress review for the NittanyMarket project. This project consists
-of an already populated `db.sqlite3` file (using the provided dataset folder), and has the login and logout features implemented. This project has been run and 
-tested on Windows 10 using Python3.9.
+![UnTube Dashboard](walkthroughs/walkthrough.png)
+
 
 ## Setting up the project
 
